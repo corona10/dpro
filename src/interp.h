@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-void initializeInterpreter(const char* llvm_filename);
+void loadBitcode(const char* llvm_filename);
 long interpret(void* function, int num_args, ...);
 
 #ifdef __cplusplus

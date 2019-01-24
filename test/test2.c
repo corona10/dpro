@@ -118,8 +118,8 @@ struct O* test_lib() {
 }
 
 int main() {
-    initializeInterpreter("test/test2.c.ll");
-    initializeInterpreter("test/lib.c.ll");
+    loadBitcode("test/test2.c.ll");
+    loadBitcode("test/lib.c.ll");
     interpret(&test_lib, 0);
 
     long r = interpret(&target, 2, 3, 5);

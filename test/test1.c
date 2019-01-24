@@ -21,7 +21,7 @@ int target(int x, int y) {
 }
 
 int main() {
-    initializeInterpreter("test/test1.c.ll");
+    loadBitcode("test/test1.c.ll");
     long r = interpret(&target, 2, 3, 5);
     printf("Received: %ld\n", r);
 

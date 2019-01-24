@@ -1192,14 +1192,14 @@ long interpret(void* function, vector<long> args) {
 } // namespace dcop
 
 extern "C" {
-void initializeInterpreter(const char* bitcode_filename) {
+void loadBitcode(const char* bitcode_filename) {
     if (llvm::sys::fs::is_directory(bitcode_filename)) {
         std::error_code ec;
         llvm::sys::fs::directory_iterator it(bitcode_filename, ec);
         RELEASE_ASSERT(!ec, "%d", ec.value());
 
         while (it != llvm::sys::fs::directory_iterator()) {
-            initializeInterpreter(it->path().c_str());
+            loadBitcode(it->path().c_str());
             // printf("%s\n", it->path().c_str());
 
             it.increment(ec);

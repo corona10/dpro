@@ -37,8 +37,8 @@ static struct PyModuleDef pytest2module = {
 PyMODINIT_FUNC
 PyInit_pytest2(void)
 {
-    initializeInterpreter("python/test/pytest2.c.ll");
-    initializeInterpreter("python/cpython_ll");
+    loadBitcode("python/test/pytest2.c.ll");
+    loadBitcode("python/cpython_ll");
 
     PyObject *m;
 
