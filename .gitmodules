@@ -1,0 +1,9 @@
+[submodule "llvm"]
+	path = llvm
+	url = https://github.com/llvm-mirror/llvm
+[submodule "clang"]
+	path = clang
+	url = https://github.com/llvm-mirror/clang
+[submodule "python/cpython"]
+	path = python/cpython
+	url = https://github.com/kmod/cpython
