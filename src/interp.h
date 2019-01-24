@@ -6,7 +6,16 @@ extern "C" {
 #endif
 
 void loadBitcode(const char* llvm_filename);
-long interpret(void* function, int num_args, ...);
+
+struct JitTarget {
+    void* target_function;
+    int num_args;
+
+    void* jitted_trace;
+};
+
+struct JitTarget* createJitTarget(void* target_function, int num_args);
+long runJitTarget(struct JitTarget* region, ...);
 
 #ifdef __cplusplus
 } // extern "C"

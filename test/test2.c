@@ -1,5 +1,6 @@
 #include <stddef.h>
 #include <stdio.h>
+#include <time.h>
 
 #include "interp.h"
 
@@ -120,13 +121,26 @@ struct O* test_lib() {
 int main() {
     loadBitcode("test/test2.c.ll");
     loadBitcode("test/lib.c.ll");
-    interpret(&test_lib, 0);
 
-    long r = interpret(&target, 2, 3, 5);
-    printf("Received: %ld\n", r);
+    struct JitTarget* jit_target = createJitTarget(&target, 2);
 
-    long r_expected = target(3, 5);
-    printf("Expected: %ld\n", r_expected);
+    struct timespec start;
+    struct timespec end;
+
+    clock_gettime(CLOCK_REALTIME, &start);
+    long expected = target(3, 5);
+    clock_gettime(CLOCK_REALTIME, &end);
+    printf("Expected   : %ld %ldns\n", expected, 1000000000 * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec);
+
+    clock_gettime(CLOCK_REALTIME, &start);
+    long interpreted = runJitTarget(jit_target, 3, 5);
+    clock_gettime(CLOCK_REALTIME, &end);
+    printf("Interpreted: %ld %ldns\n", interpreted, 1000000000 * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec);
+
+    clock_gettime(CLOCK_REALTIME, &start);
+    long jitted = runJitTarget(jit_target, 3, 5);
+    clock_gettime(CLOCK_REALTIME, &end);
+    printf("Jitted     : %ld %ldns\n", jitted, 1000000000 * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec);
 
     return 0;
 }

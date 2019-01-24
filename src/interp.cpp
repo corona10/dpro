@@ -1152,7 +1152,7 @@ public:
     }
 };
 
-long interpret(void* function, vector<long> args) {
+pair<RuntimeValue, void*> interpret(void* function, vector<long> args) {
     string name = findNameForAddress(function);
 
     const Function* func = bitcode_registry.findFunction(name);
@@ -1173,6 +1173,7 @@ long interpret(void* function, vector<long> args) {
                  << '\n';
     llvm::outs() << "Jitted function: " << r.second << '\n';
 
+#if 0
     long jit_result;
     if (args.size() == 0) {
         jit_result = ((long (*)())r.second)();
@@ -1185,8 +1186,9 @@ long interpret(void* function, vector<long> args) {
     }
 
     llvm::outs() << "Jitted  : " << jit_result << '\n';
+#endif
 
-    return r.first.getData();
+    return r;
 }
 
 } // namespace dcop
@@ -1213,15 +1215,31 @@ void loadBitcode(const char* bitcode_filename) {
     dcop::bitcode_registry.load(bitcode_filename);
 }
 
-long interpret(void* function, int num_args, ...) {
-    vector<long> args;
+JitTarget* createJitTarget(void* function, int num_args) {
+    return new JitTarget{ function, num_args, nullptr };
+}
+
+long runJitTarget(JitTarget* target, ...) {
     va_list vl;
-    va_start(vl, num_args);
-    for (int i = 0; i < num_args; i++) {
+    va_start(vl, target);
+
+    if (target->jitted_trace) {
+        switch (target->num_args) {
+        case 2:
+            return ((long (*)(long, long))target->jitted_trace)(va_arg(vl, long), va_arg(vl, long));
+        default:
+            RELEASE_ASSERT(0, "%d", target->num_args);
+        }
+    }
+
+    vector<long> args;
+    for (int i = 0; i < target->num_args; i++) {
         args.push_back(va_arg(vl, long));
     }
     va_end(vl);
 
-    return dcop::interpret(function, args);
+    auto r = dcop::interpret(target->target_function, args);
+    target->jitted_trace = r.second;
+    return r.first.getData();
 }
 }
