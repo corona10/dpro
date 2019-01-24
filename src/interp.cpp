@@ -22,7 +22,7 @@ using namespace std;
 
 #define VERBOSE
 
-namespace pystol {
+namespace dcop {
 
 string findNameForAddress(void* address) {
     Dl_info info;
@@ -1189,7 +1189,7 @@ long interpret(void* function, vector<long> args) {
     return r.first.getData();
 }
 
-} // namespace pystol
+} // namespace dcop
 
 extern "C" {
 void initializeInterpreter(const char* bitcode_filename) {
@@ -1210,7 +1210,7 @@ void initializeInterpreter(const char* bitcode_filename) {
     }
 
     printf("Loading %s\n", bitcode_filename);
-    pystol::bitcode_registry.load(bitcode_filename);
+    dcop::bitcode_registry.load(bitcode_filename);
 }
 
 long interpret(void* function, int num_args, ...) {
@@ -1222,6 +1222,6 @@ long interpret(void* function, int num_args, ...) {
     }
     va_end(vl);
 
-    return pystol::interpret(function, args);
+    return dcop::interpret(function, args);
 }
 }

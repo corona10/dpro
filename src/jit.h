@@ -1,5 +1,5 @@
-#ifndef _PYSTOL_JIT_H
-#define _PYSTOL_JIT_H
+#ifndef _DCOP_JIT_H
+#define _DCOP_JIT_H
 
 #include <list>
 #include <memory>
@@ -19,7 +19,7 @@ class Value;
 class Type;
 }
 
-namespace pystol {
+namespace dcop {
 
 class LLVMJitCompiler;
 class LLVMCompiler {

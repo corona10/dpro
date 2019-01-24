@@ -33,7 +33,7 @@ using namespace std;
 
 #include "jit.h"
 
-namespace pystol {
+namespace dcop {
 
 // from llvm/examples/Kaleidoscope/include/KaleidoscopeJIT.h
 class LLVMJitCompiler {
@@ -432,4 +432,4 @@ void* LLVMJit::finish(Value retval) {
 
 
 
-} // namespace pystol
+} // namespace dcop

@@ -1,5 +1,5 @@
-#ifndef _PYSTOL_INTERP_H
-#define _PYSTOL_INTERP_H
+#ifndef _DCOP_INTERP_H
+#define _DCOP_INTERP_H
 
 #ifdef __cplusplus
 extern "C" {
