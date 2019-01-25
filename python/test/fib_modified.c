@@ -1202,7 +1202,7 @@ static PyObject *__pyx_pf_3fib_fib(CYTHON_UNUSED PyObject *__pyx_self, PyObject 
 static PyObject *__pyx_pf_3fib_2test(CYTHON_UNUSED PyObject *__pyx_self, CYTHON_UNUSED PyObject *__pyx_v_args); /* proto */
 static PyObject *__pyx_int_1;
 static PyObject *__pyx_int_2;
-static PyObject *__pyx_int_30;
+static PyObject *__pyx_int_35;
 static PyObject *__pyx_tuple_;
 static PyObject *__pyx_tuple__3;
 static PyObject *__pyx_codeobj__2;
@@ -1359,7 +1359,7 @@ static PyObject *__pyx_pf_3fib_fib(CYTHON_UNUSED PyObject *__pyx_self, PyObject 
  * 
  * def test(*args):             # <<<<<<<<<<<<<<
  *     start = time.time()
- *     fib(30)
+ *     fib(35)
  */
 
 /* Python wrapper */
@@ -1394,7 +1394,7 @@ static PyObject *__pyx_pf_3fib_2test(CYTHON_UNUSED PyObject *__pyx_self, CYTHON_
  * 
  * def test(*args):
  *     start = time.time()             # <<<<<<<<<<<<<<
- *     fib(30)
+ *     fib(35)
  *     print("%.6f sec" % (time.time() - start))
  */
   __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_time); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 9, __pyx_L1_error)
@@ -1423,7 +1423,7 @@ static PyObject *__pyx_pf_3fib_2test(CYTHON_UNUSED PyObject *__pyx_self, CYTHON_
   /* "fib.py":10
  * def test(*args):
  *     start = time.time()
- *     fib(30)             # <<<<<<<<<<<<<<
+ *     fib(35)             # <<<<<<<<<<<<<<
  *     print("%.6f sec" % (time.time() - start))
  * 
  */
@@ -1439,7 +1439,7 @@ static PyObject *__pyx_pf_3fib_2test(CYTHON_UNUSED PyObject *__pyx_self, CYTHON_
       __Pyx_DECREF_SET(__pyx_t_3, function);
     }
   }
-  __pyx_t_1 = (__pyx_t_2) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_2, __pyx_int_30) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_int_30);
+  __pyx_t_1 = (__pyx_t_2) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_2, __pyx_int_35) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_int_35);
   __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
   if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 10, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
@@ -1448,7 +1448,7 @@ static PyObject *__pyx_pf_3fib_2test(CYTHON_UNUSED PyObject *__pyx_self, CYTHON_
 
   /* "fib.py":11
  *     start = time.time()
- *     fib(30)
+ *     fib(35)
  *     print("%.6f sec" % (time.time() - start))             # <<<<<<<<<<<<<<
  * 
  * if __name__ == "__main__":
@@ -1487,7 +1487,7 @@ static PyObject *__pyx_pf_3fib_2test(CYTHON_UNUSED PyObject *__pyx_self, CYTHON_
  * 
  * def test(*args):             # <<<<<<<<<<<<<<
  *     start = time.time()
- *     fib(30)
+ *     fib(35)
  */
 
   /* function exit code */
@@ -1595,7 +1595,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * 
  * def test(*args):             # <<<<<<<<<<<<<<
  *     start = time.time()
- *     fib(30)
+ *     fib(35)
  */
   __pyx_tuple__3 = PyTuple_Pack(2, __pyx_n_s_args, __pyx_n_s_start); if (unlikely(!__pyx_tuple__3)) __PYX_ERR(0, 8, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__3);
@@ -1612,7 +1612,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitGlobals(void) {
   if (__Pyx_InitStrings(__pyx_string_tab) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
   __pyx_int_1 = PyInt_FromLong(1); if (unlikely(!__pyx_int_1)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_2 = PyInt_FromLong(2); if (unlikely(!__pyx_int_2)) __PYX_ERR(0, 1, __pyx_L1_error)
-  __pyx_int_30 = PyInt_FromLong(30); if (unlikely(!__pyx_int_30)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __pyx_int_35 = PyInt_FromLong(35); if (unlikely(!__pyx_int_35)) __PYX_ERR(0, 1, __pyx_L1_error)
   return 0;
   __pyx_L1_error:;
   return -1;
@@ -1909,7 +1909,7 @@ if (!__Pyx_RefNanny) {
  * 
  * def test(*args):             # <<<<<<<<<<<<<<
  *     start = time.time()
- *     fib(30)
+ *     fib(35)
  */
   __pyx_t_1 = __Pyx_CyFunction_NewEx(&__pyx_mdef_3fib_3test, 0, __pyx_n_s_test, NULL, __pyx_n_s_fib, __pyx_d, ((PyObject *)__pyx_codeobj__4)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 8, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);

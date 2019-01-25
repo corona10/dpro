@@ -7,7 +7,7 @@ def fib(n):
 
 def test(*args):
     start = time.time()
-    fib(30)
+    fib(35)
     print("%.6f sec" % (time.time() - start))
 
 if __name__ == "__main__":
