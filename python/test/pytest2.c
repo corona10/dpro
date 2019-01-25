@@ -4,7 +4,7 @@
 
 #include "interp.h"
 
-struct JitTarget* jit_target;
+JitTarget* jit_target;
 
 PyObject*
 _pytest2_target() {

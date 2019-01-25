@@ -122,7 +122,7 @@ int main() {
     loadBitcode("test/test2.c.ll");
     loadBitcode("test/lib.c.ll");
 
-    struct JitTarget* jit_target = createJitTarget(&target, 2);
+    JitTarget* jit_target = createJitTarget(&target, 2);
 
     struct timespec start;
     struct timespec end;

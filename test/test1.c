@@ -24,7 +24,7 @@ int target(int x, int y) {
 int main() {
     loadBitcode("test/test1.c.ll");
 
-    struct JitTarget* jit_target = createJitTarget(&target, 2);
+    JitTarget* jit_target = createJitTarget(&target, 2);
 
     struct timespec start;
     struct timespec end;

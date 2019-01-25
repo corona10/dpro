@@ -84,7 +84,7 @@ public:
     }
 
     Function* findFunction(string name) {
-        RELEASE_ASSERT(functions.count(name), "");
+        RELEASE_ASSERT(functions.count(name), "%s", name.c_str());
         return functions[name];
     }
 } bitcode_registry;
