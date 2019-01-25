@@ -1,3 +1,5 @@
 build
 *.ll
 python/system_env
+perf.data
+perf.data.old
