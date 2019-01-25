@@ -1219,7 +1219,7 @@ JitTarget* createJitTarget(void* function, int num_args) {
     return new JitTarget{ function, num_args, nullptr };
 }
 
-long runJitTarget(JitTarget* target, ...) {
+long _runJitTarget(JitTarget* target, ...) {
     va_list vl;
     va_start(vl, target);
 

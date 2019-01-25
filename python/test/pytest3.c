@@ -22,14 +22,24 @@ pytest3_test(PyObject *self, PyObject *args)
     struct timespec end;
 
     clock_gettime(CLOCK_REALTIME, &start);
-    long interpreted = runJitTarget(jit_target, args);
+    long interpreted = _runJitTarget(jit_target, args);
     clock_gettime(CLOCK_REALTIME, &end);
     printf("Interpreted: %ld %ldns\n", interpreted, 1000000000 * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec);
 
     clock_gettime(CLOCK_REALTIME, &start);
-    long jitted = runJitTarget(jit_target, args);
+    long jitted = _runJitTarget(jit_target, args);
     clock_gettime(CLOCK_REALTIME, &end);
     printf("Jitted     : %ld %ldns\n", jitted, 1000000000 * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec);
+
+    clock_gettime(CLOCK_REALTIME, &start);
+    long jitted2 = ((long (*)(long))jit_target->jitted_trace)((long)args);
+    clock_gettime(CLOCK_REALTIME, &end);
+    printf("Jitted2    : %ld %ldns\n", jitted, 1000000000 * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec);
+
+    clock_gettime(CLOCK_REALTIME, &start);
+    long jitted3 = runJitTarget1(jit_target, (long)args);
+    clock_gettime(CLOCK_REALTIME, &end);
+    printf("Jitted3    : %ld %ldns\n", jitted, 1000000000 * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec);
 
     clock_gettime(CLOCK_REALTIME, &start);
     long expected = (long)_pytest3_target(args);
