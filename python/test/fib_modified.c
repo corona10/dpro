@@ -1231,6 +1231,7 @@ static PyObject *__pyx_pw_3fib_1fib(PyObject *__pyx_self, PyObject *__pyx_v_n) {
   return __pyx_r;
 }
 
+static JitTarget* target_richcompare;
 static PyObject *__pyx_pf_3fib_fib(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_n) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -1249,7 +1250,13 @@ static PyObject *__pyx_pf_3fib_fib(CYTHON_UNUSED PyObject *__pyx_self, PyObject 
  *         return n
  *     return fib(n - 1) + fib(n - 2)
  */
-  __pyx_t_1 = PyObject_RichCompare(__pyx_v_n, __pyx_int_2, Py_LT); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 4, __pyx_L1_error)
+
+  //__pyx_t_1 = PyObject_RichCompare(__pyx_v_n, __pyx_int_2, Py_LT);
+  __pyx_t_1 = (PyObject*)runJitTarget3(target_richcompare, (long)__pyx_v_n, (long)__pyx_int_2, Py_LT);
+
+  __Pyx_XGOTREF(__pyx_t_1);
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 4, __pyx_L1_error)
+
   __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 4, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   if (__pyx_t_2) {
@@ -1957,6 +1964,10 @@ if (!__Pyx_RefNanny) {
   __Pyx_GOTREF(__pyx_t_3);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_test_2, __pyx_t_3) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+
+  loadBitcode("python/test/fib_modified.c.ll");
+  loadBitcode("python/cpython_ll");
+  target_richcompare = createJitTarget(&PyObject_RichCompare, 3);
 
   /*--- Wrapped vars code ---*/
 
