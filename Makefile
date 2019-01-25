@@ -66,3 +66,15 @@ dbg_%: python/test/%.c.ll python/cpython/python build/PartialDebug/build.ninja
 debug_%: python/test/%.c.ll python/cpython/python build/Debug/build.ninja
 	cd build/Debug; ninja $(patsubst python/test/%.c.ll,%,$<)
 	PYTHONPATH=build/Debug/python/test gdb --args python/cpython/python -c "import $(patsubst python/test/%.c.ll,%,$<); print($(patsubst python/test/%.c.ll,%,$<).test(4, 5))"
+
+python/system_env: python/cpython/python
+	virtualenv python/system_env
+python/system_env/bin/cython: python/system_env
+	python/system_env/bin/pip install cython
+python/test/fib.c: python/test/fib.py | python/system_env/bin/cython
+	python/system_env/bin/cython python/test/fib.py
+
+# `make fib` already supported
+.PHONY: fib_py
+fib_py:
+	python/cpython/python python/test/fib.py
