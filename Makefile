@@ -57,12 +57,12 @@ debug_test2: test/test2.c.ll test/lib.c.ll build/Debug/build.ninja
 	cd build/Debug; ninja test2
 	gdb --args ./build/Debug/test/test2
 
-%: python/test/%.c.ll python/cpython/python
+%: python/test/%.c.ll python/cpython/python build/Release/build.ninja
 	cd build/Release; ninja $(patsubst python/test/%.c.ll,%,$<)
 	PYTHONPATH=build/Release/python/test python/cpython/python -c "import $(patsubst python/test/%.c.ll,%,$<); print($(patsubst python/test/%.c.ll,%,$<).test(4, 5))"
-dbg_%: python/test/%.c.ll python/cpython/python
+dbg_%: python/test/%.c.ll python/cpython/python build/PartialDebug/build.ninja
 	cd build/PartialDebug; ninja $(patsubst python/test/%.c.ll,%,$<)
 	PYTHONPATH=build/PartialDebug/python/test gdb --args python/cpython/python -c "import $(patsubst python/test/%.c.ll,%,$<); print($(patsubst python/test/%.c.ll,%,$<).test(4, 5))"
-debug_%: python/test/%.c.ll python/cpython/python
+debug_%: python/test/%.c.ll python/cpython/python build/Debug/build.ninja
 	cd build/Debug; ninja $(patsubst python/test/%.c.ll,%,$<)
 	PYTHONPATH=build/Debug/python/test gdb --args python/cpython/python -c "import $(patsubst python/test/%.c.ll,%,$<); print($(patsubst python/test/%.c.ll,%,$<).test(4, 5))"

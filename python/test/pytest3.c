@@ -1,6 +1,10 @@
+#include <time.h>
+
 #include "Python.h"
 
 #include "interp.h"
+
+struct JitTarget* jit_target;
 
 PyObject*
 _pytest3_target(PyObject* args) {
@@ -14,9 +18,25 @@ _pytest3_target(PyObject* args) {
 static PyObject *
 pytest3_test(PyObject *self, PyObject *args)
 {
-    return (PyObject*)interpret(&_pytest3_target, 1, args);
-    //Py_RETURN_NONE;
-    //return PyLong_FromLong(0);
+    struct timespec start;
+    struct timespec end;
+
+    clock_gettime(CLOCK_REALTIME, &start);
+    long interpreted = runJitTarget(jit_target, args);
+    clock_gettime(CLOCK_REALTIME, &end);
+    printf("Interpreted: %ld %ldns\n", interpreted, 1000000000 * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec);
+
+    clock_gettime(CLOCK_REALTIME, &start);
+    long jitted = runJitTarget(jit_target, args);
+    clock_gettime(CLOCK_REALTIME, &end);
+    printf("Jitted     : %ld %ldns\n", jitted, 1000000000 * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec);
+
+    clock_gettime(CLOCK_REALTIME, &start);
+    long expected = (long)_pytest3_target(args);
+    clock_gettime(CLOCK_REALTIME, &end);
+    printf("Expected   : %ld %ldns\n", expected, 1000000000 * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec);
+
+    return (PyObject*)jitted;
 }
 
 static PyMethodDef pytest3Methods[] = {
@@ -39,6 +59,8 @@ PyInit_pytest3(void)
 {
     loadBitcode("python/test/pytest3.c.ll");
     loadBitcode("python/cpython_ll");
+
+    jit_target = createJitTarget(&_pytest3_target, 1);
 
     PyObject *m;
 

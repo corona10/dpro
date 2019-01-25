@@ -1225,6 +1225,10 @@ long runJitTarget(JitTarget* target, ...) {
 
     if (target->jitted_trace) {
         switch (target->num_args) {
+        case 0:
+            return ((long (*)())target->jitted_trace)();
+        case 1:
+            return ((long (*)(long))target->jitted_trace)(va_arg(vl, long));
         case 2:
             return ((long (*)(long, long))target->jitted_trace)(va_arg(vl, long), va_arg(vl, long));
         default:

@@ -1,6 +1,10 @@
+#include <time.h>
+
 #include "Python.h"
 
 #include "interp.h"
+
+struct JitTarget* jit_target;
 
 PyObject*
 _pytest1_target() {
@@ -14,9 +18,25 @@ pytest1_test(PyObject *self, PyObject *args)
     if (!PyArg_ParseTuple(args, "ll", &x, &y))
         return NULL;
 
-    return (PyObject*)interpret(&_pytest1_target, 0);
-    //Py_RETURN_NONE;
-    //return PyLong_FromLong(0);
+    struct timespec start;
+    struct timespec end;
+
+    clock_gettime(CLOCK_REALTIME, &start);
+    long interpreted = runJitTarget(jit_target);
+    clock_gettime(CLOCK_REALTIME, &end);
+    printf("Interpreted: %ld %ldns\n", interpreted, 1000000000 * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec);
+
+    clock_gettime(CLOCK_REALTIME, &start);
+    long jitted = runJitTarget(jit_target);
+    clock_gettime(CLOCK_REALTIME, &end);
+    printf("Jitted     : %ld %ldns\n", jitted, 1000000000 * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec);
+
+    clock_gettime(CLOCK_REALTIME, &start);
+    long expected = (long)_pytest1_target();
+    clock_gettime(CLOCK_REALTIME, &end);
+    printf("Expected   : %ld %ldns\n", expected, 1000000000 * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec);
+
+    return (PyObject*)jitted;
 }
 
 static PyMethodDef pytest1Methods[] = {
@@ -39,6 +59,8 @@ PyInit_pytest1(void)
 {
     loadBitcode("python/test/pytest1.c.ll");
     loadBitcode("python/cpython_ll");
+
+    jit_target = createJitTarget(&_pytest1_target, 0);
 
     PyObject *m;
 
